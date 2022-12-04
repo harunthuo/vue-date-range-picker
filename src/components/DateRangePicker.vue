@@ -1,5 +1,5 @@
 <template>
-    <input type="text" :class="className" />
+  <input type="text" :class="className" />
 </template>
 
 <script>
@@ -13,69 +13,73 @@ export default {
     value: {},
     options: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
-      }
+      },
     },
     format: {
       type: String,
-      default: "DD/MM/YYYY"
+      default: "DD/MM/YYYY",
     },
     className: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   data: () => ({
-    range: []
+    range: [],
   }),
   computed: {
     isSingleDatePicker() {
       return this.options.singleDatePicker;
     },
     startDate() {
-      if (this.isSingleDatePicker) {
+      /* if (this.isSingleDatePicker) {
         return this.range;
-      }
+      } */
       return this.range[0];
     },
     endDate() {
-      if (this.isSingleDatePicker) {
+      /* if (this.isSingleDatePicker) {
         return this.range;
-      }
+      } */
       return this.range[1];
     },
     customOptions() {
       return {
         locale: {
-          format: this.format
+          format: this.format,
         },
-        ...this.options
+        ...this.options,
       };
-    }
+    },
   },
   watch: {
     value(value) {
       const el = $(this.$el);
-      if (this.isSingleDatePicker) {
+
+      el.data("daterangepicker").setStartDate(value[0]);
+      el.data("daterangepicker").setEndDate(value[1]);
+
+      /* if (this.isSingleDatePicker) {
         el.data('daterangepicker').setStartDate(value);
       } else {
         el.data('daterangepicker').setStartDate(value[0]);
         el.data('daterangepicker').setEndDate(value[1]);
-      }
+      } */
     },
     range(value) {
       this.$emit("change", value);
       this.$emit("input", value);
-    }
+    },
   },
   methods: {
     show() {
-      $(this.$el).data('daterangepicker').show();
+      $(this.$el).data("daterangepicker").show();
     },
     hide() {
-      $(this.$el).data('daterangepicker').hide();
-    }
+      $(this.$el).data("daterangepicker").hide();
+    },
   },
   created() {
     this.range = this.value;
@@ -87,25 +91,27 @@ export default {
       el.on("apply.daterangepicker", (event, picker) => {
         const startDate = picker.startDate.format(this.format);
         const endDate = picker.endDate.format(this.format);
-        if (this.isSingleDatePicker) {
+
+        this.range = [startDate, endDate];
+        /* if (this.isSingleDatePicker) {
           this.range = startDate;
         } else {
           this.range = [startDate, endDate];
-        }
+        } */
       });
       el.on("cancel.daterangepicker", () => {
-        if (this.isSingleDatePicker) {
+        this.range = [];
+
+        /* if (this.isSingleDatePicker) {
           this.range = "";
         } else {
           this.range = [];
-        }
+        } */
       });
     });
   },
   beforeDestroy() {
-    $(this.$el)
-      .daterangepicker("hide")
-      .daterangepicker("destroy");
-  }
+    $(this.$el).daterangepicker("hide").daterangepicker("destroy");
+  },
 };
 </script>
