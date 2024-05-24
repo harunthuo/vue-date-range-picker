@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _DateRangePicker = import("./src/components/DateRangePicker");
+var _DateRangePicker = import("./src/components/DateRangePicker.vue");
 
 var _DateRangePicker2 = _interopRequireDefault(_DateRangePicker);
 
