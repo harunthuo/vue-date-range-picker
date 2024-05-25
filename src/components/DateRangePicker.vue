@@ -5,7 +5,7 @@
 <script>
 import "daterangepicker/daterangepicker";
 import "daterangepicker/daterangepicker.css";
-import $ from "jquery";
+import $ from "jquery/dist/jquery.js";
 
 export default {
   name: "date-range-picker",
