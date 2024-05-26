@@ -23,6 +23,7 @@
 <script>
 import DateRangePicker from "./components/DateRangePicker";
 import moment from "moment";
+window.moment = moment;
 
 export default {
   name: "app",
